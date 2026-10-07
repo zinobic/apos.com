@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#f7f7f8">
+<title>METHOD CHECK IOS - $hip and Hext</title>
+<link rel="icon" type="image/jpeg" href="https://i.postimg.cc/Fsg2sTv0/IMG-0534.jpg">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+:root{--bg:#f7f7f8;--card:rgba(255,255,255,.88);--text:#111111;--muted:#777;--border:rgba(0,0,0,.09);--accent:#111111;--accent-soft:#eeeeef;--green:#18794e;--orange:#996600;--red:#b4233c;--blue:#315f9b;--shadow:0 12px 40px rgba(0,0,0,.055);--radius:18px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter",Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+body:before{content:"";position:fixed;inset:0;z-index:-3;background:radial-gradient(circle at 10% 5%,rgba(0,0,0,.035),transparent 27%),radial-gradient(circle at 90% 20%,rgba(0,0,0,.025),transparent 27%);}
+body:after{content:"";position:fixed;inset:0;z-index:-2;opacity:.035;background-image:linear-gradient(rgba(0,0,0,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.1) 1px,transparent 1px);background-size:32px 32px;}
+#loginScreen{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;background:#f7f7f8;}
+.login-box{width:min(430px,100%);padding:30px;background:rgba(255,255,255,.94);border:1px solid rgba(0,0,0,.09);border-radius:23px;backdrop-filter:blur(30px);box-shadow:0 25px 80px rgba(0,0,0,.10);}
+.login-line{width:34px;height:4px;background:#111;border-radius:10px;margin-bottom:20px;}
+.login-small{display:flex;align-items:center;gap:8px;color:#777;font-size:8px;font-weight:950;letter-spacing:2px;margin-bottom:9px;}
+.login-academy-logo{width:24px;height:24px;flex:0 0 24px;object-fit:cover;border-radius:7px;border:1px solid rgba(0,0,0,.10);box-shadow:0 3px 10px rgba(0,0,0,.10);background:#eee;display:block;}
+.login-academy-logo.fallback{display:none;}
+.login-title{font-size:28px;line-height:1.04;font-weight:950;letter-spacing:-1.5px;}
+.login-title span{color:#555;}
+.login-sub{color:#888;font-size:8px;margin-top:10px;line-height:1.7;}
+#passwordInput{width:100%;height:51px;margin-top:22px;padding:0 14px;border:1px solid rgba(0,0,0,.12);border-radius:12px;background:#fafafa;color:#111;outline:none;font-size:12px;}
+#passwordInput:focus{border-color:#111;box-shadow:0 0 0 3px rgba(0,0,0,.055);}
+#loginButton{width:100%;height:49px;margin-top:9px;border:0;border-radius:12px;background:#111;color:white;font-size:9px;font-weight:950;letter-spacing:1.5px;cursor:pointer;}
+#loginButton:hover{background:#333;}
+#loginError{min-height:18px;margin-top:9px;text-align:center;color:var(--red);font-size:8px;font-weight:900;}
+#app{display:none;}
+.container{width:min(1180px,94%);margin:auto;padding:20px 0 55px;}
+.header{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:10px;}
+.brand{padding:22px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);backdrop-filter:blur(22px);box-shadow:var(--shadow);}
+.brand-top{display:flex;align-items:center;gap:9px;margin-bottom:10px;}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#111;}
+.brand-top span{color:#777;font-size:8px;font-weight:950;letter-spacing:1.8px;}
+h1{font-size:clamp(23px,4vw,40px);line-height:1;letter-spacing:-1.8px;font-weight:950;}
+h1 span{color:#555;}
+.subtitle{color:#888;font-size:8px;margin-top:9px;}
+.header-menu{min-width:105px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);backdrop-filter:blur(22px);box-shadow:var(--shadow);}
+.menu-btn{width:58px;height:58px;border:1px solid var(--border);background:#fff;border-radius:14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
+.menu-btn span{width:21px;height:2px;background:#111;border-radius:2px;}
+.cover{height:250px;border-radius:var(--radius);overflow:hidden;position:relative;margin-bottom:10px;border:1px solid var(--border);box-shadow:var(--shadow);background:#111;}
+.cover img{width:100%;height:100%;object-fit:cover;}
+.cover:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.65),transparent 65%);}
+.cover-text{position:absolute;z-index:2;left:20px;bottom:17px;color:#fff;}
+.cover-text b{display:block;font-size:14px;letter-spacing:1px;}
+.cover-text small{display:block;margin-top:4px;font-size:7px;letter-spacing:1.4px;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.card{padding:18px;border-radius:var(--radius);border:1px solid var(--border);background:var(--card);backdrop-filter:blur(22px);box-shadow:var(--shadow);}
+.full{grid-column:1/-1;}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px;}
+.card-title{font-size:10px;font-weight:950;letter-spacing:1.4px;}
+.card-number{color:#999;font-size:7px;font-weight:900;}
+.btn{border:1px solid var(--border);background:#fff;color:#111;border-radius:10px;padding:10px 13px;cursor:pointer;font-size:8px;font-weight:950;letter-spacing:1px;transition:.18s;}
+.btn:hover{background:#f1f1f1;transform:translateY(-1px);}
+.btn.red{background:#111;border-color:#111;color:#fff;}
+.btn:disabled{opacity:.35;cursor:not-allowed;}
+.upload{min-height:170px;border:1px dashed rgba(0,0,0,.18);border-radius:14px;background:rgba(250,250,250,.7);display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;cursor:pointer;}
+.upload:hover{background:#fff;border-color:#111;}
+.upload-symbol{width:46px;height:46px;border:1px solid var(--border);border-radius:13px;display:grid;place-items:center;margin-bottom:11px;font-size:20px;}
+.upload strong{font-size:11px;}
+.upload small{max-width:390px;margin-top:7px;color:#888;font-size:7px;line-height:1.7;}
+#fileInput{display:none;}
+.file-list{margin-top:9px;max-height:220px;overflow:auto;}
+.file{display:flex;justify-content:space-between;gap:12px;padding:10px 11px;margin-bottom:5px;border:1px solid rgba(0,0,0,.07);border-radius:10px;background:#fafafa;}
+.file-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:8px;font-weight:850;}
+.file-size{color:#888;white-space:nowrap;font-size:7px;}
+.actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
+.stat{min-height:85px;padding:13px;border:1px solid rgba(0,0,0,.07);border-radius:12px;background:#fafafa;}
+.stat b{display:block;font-size:24px;letter-spacing:-1px;}
+.stat span{display:block;margin-top:5px;color:#888;font-size:6px;font-weight:950;letter-spacing:1px;}
+.analysis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.result{min-height:135px;padding:13px;border-radius:12px;border:1px solid rgba(0,0,0,.07);background:#fafafa;}
+.result h3{font-size:8px;letter-spacing:1.2px;margin-bottom:9px;}
+.status{display:inline-block;padding:5px 7px;border-radius:6px;font-size:6px;font-weight:950;margin-bottom:9px;background:#eee;}
+.status.ok{background:#e8f5ee;color:var(--green);}
+.status.warn{background:#fff4dc;color:var(--orange);}
+.status.bad{background:#fde8ec;color:var(--red);}
+.status.blue{background:#eaf0f8;color:var(--blue);}
+.details{color:#777;font-size:7px;line-height:1.7;word-break:break-word;}
+.search-box{display:flex;gap:7px;align-items:center;}
+#globalSearch{flex:1;width:100%;height:43px;padding:0 13px;border:1px solid rgba(0,0,0,.11);border-radius:11px;background:#fafafa;color:#111;outline:none;font-size:10px;}
+#globalSearch:focus{background:#fff;border-color:#111;box-shadow:0 0 0 3px rgba(0,0,0,.045);}
+#globalSearchClear{height:43px;min-width:43px;padding:0 12px;}
+.search-meta{margin-top:8px;color:#888;font-size:7px;line-height:1.7;}
+.search-results{margin-top:10px;max-height:600px;overflow:auto;}
+.search-item{padding:12px;margin-bottom:7px;border:1px solid rgba(0,0,0,.07);border-radius:11px;background:#fafafa;}
+.search-title{font-size:9px;font-weight:950;word-break:break-word;}
+.search-type{display:inline-block;margin-top:6px;padding:4px 6px;border-radius:5px;background:#eeeeef;color:#555;font-size:6px;font-weight:950;letter-spacing:.7px;}
+.search-date{margin-top:6px;font-size:7px;font-weight:900;}
+.search-source{margin-top:4px;color:#888;font-size:7px;word-break:break-word;}
+.search-context{margin-top:7px;padding:9px;border-radius:8px;background:#fff;color:#777;font-family:monospace;font-size:7px;line-height:1.7;word-break:break-word;}
+.search-highlight{background:#111;color:#fff;padding:1px 2px;border-radius:2px;}
+.app-item{padding:12px;margin-bottom:7px;border:1px solid rgba(0,0,0,.07);border-radius:11px;background:#fafafa;}
+.app-name{font-size:10px;font-weight:950;}
+.app-bundle{margin-top:5px;font-family:monospace;color:#777;font-size:7px;word-break:break-all;}
+.app-evidence{margin-top:5px;color:#888;font-size:7px;line-height:1.65;}
+.timeline{border-left:1px solid rgba(0,0,0,.14);padding-left:18px;}
+.event{position:relative;padding-bottom:17px;}
+.event:before{content:"";position:absolute;left:-22px;top:3px;width:7px;height:7px;border-radius:50%;background:#111;}
+.event-date{font-size:8px;font-weight:950;}
+.event-type{margin-top:3px;font-size:8px;font-weight:900;}
+.event-source{margin-top:3px;color:#888;font-size:7px;}
+.event-context{margin-top:4px;color:#999;font-size:7px;line-height:1.6;}
+.history-item{padding:13px;margin-bottom:7px;border:1px solid rgba(0,0,0,.07);border-radius:12px;background:#fafafa;}
+.history-top{display:flex;justify-content:space-between;gap:10px;}
+.history-id{font-size:8px;font-weight:950;}
+.history-time{color:#888;font-size:7px;}
+.history-info{margin-top:8px;color:#777;font-size:7px;line-height:1.8;}
+#sideMenu{position:fixed;inset:0;z-index:8000;pointer-events:none;}
+.menu-overlay{position:absolute;inset:0;background:rgba(0,0,0,.2);opacity:0;transition:.25s;}
+.menu-panel{position:absolute;right:0;top:0;height:100%;width:min(330px,88%);padding:22px;background:rgba(255,255,255,.96);backdrop-filter:blur(30px);border-left:1px solid rgba(0,0,0,.08);box-shadow:-20px 0 80px rgba(0,0,0,.10);transform:translateX(100%);transition:.3s;}
+#sideMenu.open{pointer-events:auto;}
+#sideMenu.open .menu-overlay{opacity:1;}
+#sideMenu.open .menu-panel{transform:translateX(0);}
+.menu-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;}
+.menu-title{font-size:11px;font-weight:950;letter-spacing:1.5px;}
+.close-menu{width:36px;height:36px;border:1px solid var(--border);background:#fff;border-radius:10px;cursor:pointer;font-size:16px;}
+.menu-link{width:100%;text-align:left;padding:15px 13px;margin-bottom:7px;border:1px solid rgba(0,0,0,.07);background:#fafafa;border-radius:11px;cursor:pointer;font-size:8px;font-weight:950;letter-spacing:1px;}
+.menu-link:hover{border-color:#111;}
+.info{text-align:center;}
+.credit{font-size:12px;font-weight:950;}
+.links{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.links a{text-decoration:none;color:#111;border:1px solid var(--border);background:#fff;padding:9px 11px;border-radius:9px;font-size:7px;font-weight:900;}
+.empty{color:#999;font-size:7px;padding:10px 0;}
+.hidden{display:none!important;}
+.progress{margin-top:9px;display:none;}
+.progress-bar{width:100%;height:5px;border-radius:10px;background:#eee;overflow:hidden;}
+.progress-fill{width:0%;height:100%;background:#111;transition:width:.15s;}
+.progress-text{margin-top:5px;color:#888;font-size:7px;}
+.logo-ui{width:18px;height:18px;min-width:18px;display:inline-grid;place-items:center;vertical-align:middle;border-radius:5px;overflow:hidden;margin-right:7px;background:#f1f1f2;color:#111;font-size:10px;line-height:1;}
+.logo-ui svg{width:100%;height:100%;display:block}
+.logo-brand{width:19px;height:19px;min-width:19px;object-fit:contain;vertical-align:middle;margin-right:7px;border-radius:5px;background:#fff;}
+.menu-link,.btn,.close-menu{display:flex;align-items:center;gap:0;}
+.menu-link .logo-ui{margin-right:9px}
+.close-menu{justify-content:center}
+.card-title,.result h3,.menu-title{display:flex;align-items:center;}
+.info-logo-link{display:inline-flex!important;align-items:center;}
+.info-logo-link .logo-brand{margin-right:6px;}
+.bundle-row{display:flex;align-items:center;gap:9px;min-height:30px;padding:5px 7px;border-radius:10px;background:rgba(0,0,0,.018);}
+.bundle-row:hover{background:rgba(0,0,0,.045)}
+.bundle-logo{width:21px;height:21px;min-width:21px;object-fit:contain;border-radius:6px;background:#fff;box-shadow:0 1px 5px rgba(0,0,0,.12);}
+.bundle-fallback{width:21px;height:21px;min-width:21px;display:grid;place-items:center;border-radius:6px;background:#111;color:#fff;font-size:9px;font-weight:950;}
+.app-row{display:flex;align-items:flex-start;gap:10px;}
+.app-icon{width:42px;height:42px;min-width:42px;border-radius:11px;object-fit:cover;background:#f0f0f1;box-shadow:0 3px 12px rgba(0,0,0,.10);border:1px solid rgba(0,0,0,.08);}
+.app-icon-fallback{width:42px;height:42px;min-width:42px;border-radius:11px;display:grid;place-items:center;background:#111;color:#fff;font-size:15px;font-weight:950;box-shadow:0 3px 12px rgba(0,0,0,.10);}
+.app-main{min-width:0;flex:1;}
+.app-name-line{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.app-source{color:#aaa;font-size:6px;font-weight:900;letter-spacing:.5px;}
+
+@media(max-width:850px){.grid{grid-template-columns:1fr;}.full{grid-column:auto;}.analysis{grid-template-columns:1fr 1fr;}}
+@media(max-width:650px){.header-menu{min-width:72px;}.brand{padding:17px;}h1{font-size:23px;}.cover{height:210px;}.analysis{grid-template-columns:1fr;}.stats{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+
+<section id="loginScreen">
+<div class="login-box">
+<div class="login-line"></div>
+<div class="login-small">
+<img src="https://i.postimg.cc/Fsg2sTv0/IMG-0534.jpg" alt="APOS Academy" class="login-academy-logo" width="24" height="24" loading="eager" referrerpolicy="no-referrer" onerror="this.classList.add('fallback')">
+<span>APOS ACADEMY</span>
+</div>
+<div class="login-title">METHOD CHECK IOS -<span>$hip and Hext</span></div>
+<div class="login-sub">Enter password to continue.</div>
+<input id="passwordInput" type="password" placeholder="Enter password" autocomplete="off">
+<button id="loginButton" type="button">ENTER</button>
+<div id="loginError"></div>
+</div>
+</section>
+
+<div id="app">
+<div class="container">
+<header class="header">
+<div class="brand">
+<div class="brand-top"><div class="live-dot"></div><span>IOS FORENSIC / LOG ANALYSIS</span></div>
+<h1>METHOD CHICK IOS -<span>$hip and Hext</span></h1>
+<div class="subtitle">Evidence analyzer · DNS · VPN · Profiles · Apps · Timeline</div>
+</div>
+<div class="header-menu">
+<button class="menu-btn" id="menuButton" type="button" aria-label="Open menu"><span></span><span></span><span></span></button>
+</div>
+</header>
+
+<section class="cover">
+<img src="https://i.postimg.cc/pVgnPJHs/IMG-9645.jpg" alt="Method Check IOS">
+<div class="cover-text"><b>METHOD CHECK</b><small>$HIP AND HEXT · IOS ANALYSIS</small></div>
+</section>
+
+<div class="grid">
+<section class="card" id="methodSection">
+<div class="card-head"><div class="card-title">01 / FILE INPUT</div><div class="card-number">UPLOAD</div></div>
+<label class="upload" for="fileInput">
+<div class="upload-symbol">✦</div>
+<strong>SELECT FILES / ZIP</strong>
+<small>Select logs, sysdiagnose files or a ZIP archive. The analyzer reads the supplied evidence locally.</small>
+</label>
+<input id="fileInput" type="file" multiple accept="*/*">
+<div id="fileList" class="file-list"></div>
+<div class="actions">
+<button id="analyzeButton" class="btn red" disabled type="button">ANALYZE</button>
+<button id="clearButton" class="btn" type="button">CLEAR</button>
+<button id="exportButton" class="btn" disabled type="button">EXPORT</button>
+</div>
+<div class="progress" id="progressBox">
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-text" id="progressText">Preparing analysis...</div>
+</div>
+</section>
+
+<section class="card">
+<div class="card-head"><div class="card-title">02 / QUICK STATUS</div><div class="card-number">LOCAL</div></div>
+<div class="stats">
+<div class="stat"><b id="statFiles">0</b><span>FILES</span></div>
+<div class="stat"><b id="statEvents">0</b><span>EVENTS</span></div>
+<div class="stat"><b id="statDns">0</b><span>DNS / IP</span></div>
+<div class="stat"><b id="statApps">0</b><span>BUNDLE IDS</span></div>
+</div>
+</section>
+
+<section class="card full">
+<div class="card-head"><div class="card-title">03 / ANALYSIS</div><div class="card-number">EVIDENCE</div></div>
+<div class="analysis">
+<div class="result"><h3>DNS</h3><div id="dnsStatus" class="status blue">WAITING</div><div id="dnsDetails" class="details">No analysis yet.</div></div>
+<div class="result"><h3>VPN</h3><div id="vpnStatus" class="status blue">WAITING</div><div id="vpnDetails" class="details">No analysis yet.</div></div>
+<div class="result"><h3>PROFILES / MDM</h3><div id="profileStatus" class="status blue">WAITING</div><div id="profileDetails" class="details">No analysis yet.</div></div>
+<div class="result"><h3>CERTIFICATES</h3><div id="certStatus" class="status blue">WAITING</div><div id="certDetails" class="details">No analysis yet.</div></div>
+<div class="result"><h3>APP INSTALLATION</h3><div id="appStatus" class="status blue">WAITING</div><div id="appDetails" class="details">No analysis yet.</div></div>
+<div class="result"><h3>REMOVAL / REVOKE</h3><div id="removeStatus" class="status blue">WAITING</div><div id="removeDetails" class="details">No analysis yet.</div></div>
+</div>
+</section>
+
+<section class="card full" id="searchSection">
+<div class="card-head"><div class="card-title">04 / SEARCH EVIDENCE</div><div class="card-number">FILES · URLS · DNS · APPS</div></div>
+<div class="search-box">
+<input id="globalSearch" type="search" autocomplete="off" spellcheck="false" placeholder="Search files, URLs, domains, apps, bundle IDs, dates...">
+<button id="globalSearchClear" class="btn" type="button">CLEAR</button>
+</div>
+<div id="searchMeta" class="search-meta">Search all loaded evidence after analysis.</div>
+<div id="searchResults" class="search-results"><div class="empty">No search performed.</div></div>
+</section>
+
+<section class="card full">
+<div class="card-head"><div class="card-title">05 / APPLICATIONS</div><div class="card-number">BUNDLE → APP → ICON · INSTALL / REMOVE</div></div>
+<div id="appsResults"><div class="empty">No application evidence found.</div></div>
+</section>
+
+<section class="card">
+<div class="card-head"><div class="card-title">06 / PLIST DATA</div><div class="card-number">STRUCTURE</div></div>
+<div id="plistResults" class="details">No PLIST / MSPROFILE / MOBILECONFIG analyzed.</div>
+</section>
+
+<section class="card">
+<div class="card-head"><div class="card-title">07 / TIMELINE</div><div class="card-number">DATES</div></div>
+<div id="timeline" class="timeline"><div class="empty">No timestamped evidence.</div></div>
+</section>
+
+<section class="card full">
+<div class="card-head"><div class="card-title">08 / FILE EVIDENCE</div><div class="card-number">DETAIL</div></div>
+<div id="evidence"><div class="empty">No files analyzed.</div></div>
+</section>
+
+<section id="historySection" class="card full hidden">
+<div class="card-head"><div class="card-title">09 / HISTORY</div><button id="clearHistory" class="btn" type="button">CLEAR HISTORY</button></div>
+<div id="historyList"></div>
+</section>
+
+<section id="infoSection" class="card full info">
+<div class="card-head"><div class="card-title">10 / INFO</div></div>
+<div class="credit">bot created by $hip and Hext</div>
+<div class="links">
+<a href="https://t.me/zinobic" target="_blank" rel="noopener">Telegram : zinobic</a>
+<a href="#">Discord : zinorezn</a>
+<a href="#">Discord : hextdiedalone</a>
+</div>
+</section>
+
+<div style="text-align:center;color:#999;font-size:7px;margin-top:22px;">METHOD CHICK IOS - $hip and Hext · V8 · APP ICON ENGINE</div>
+</div>
+</div>
+</div>
+
+<div id="sideMenu">
+<div class="menu-overlay" id="menuOverlay"></div>
+<aside class="menu-panel">
+<div class="menu-top"><div class="menu-title">MENU</div><button class="close-menu" id="closeMenu" type="button">×</button></div>
+<button class="menu-link" data-target="searchSection" type="button">SEARCH</button>
+<button class="menu-link" data-target="historySection" type="button">HISTORY</button>
+<button class="menu-link" data-target="methodSection" type="button">METHOD</button>
+<button class="menu-link" data-target="infoSection" type="button">INFO</button>
+</aside>
+</div>
+
+<script>
+/* =========================================
+   LOGIN
+========================================= */
+const ACCESS_PASSWORD = "@aposadmin";
+const loginScreen = document.getElementById("loginScreen");
+const passwordInput = document.getElementById("passwordInput");
+const loginButton = document.getElementById("loginButton");
+const loginError = document.getElementById("loginError");
+const app = document.getElementById("app");
+function unlock(){
+    const entered = passwordInput.value.trim();
+    if(entered === ACCESS_PASSWORD){
+        loginError.textContent = "";
+        loginScreen.style.display = "none";
+        app.style.display = "block";
+        document.body.style.overflow = "auto";
+        passwordInput.value = "";
+        window.scrollTo(0,0);
+    }else{
+        loginError.textContent = "Invalid password.";
+        passwordInput.value = "";
+        passwordInput.focus();
+    }
+}
+loginButton.addEventListener("click", unlock);
+passwordInput.addEventListener("keydown", function(event){ if(event.key === "Enter"){ event.preventDefault(); unlock(); } });
+
+/* =========================================
+   MENU
+========================================= */
+const sideMenu = document.getElementById("sideMenu");
+document.getElementById("menuButton").addEventListener("click", ()=>{ sideMenu.classList.add("open"); });
+document.getElementById("closeMenu").addEventListener("click", ()=>{ sideMenu.classList.remove("open"); });
+document.getElementById("menuOverlay").addEventListener("click", ()=>{ sideMenu.classList.remove("open"); });
+document.querySelectorAll(".menu-link").forEach(button=>{
+    button.addEventListener("click", ()=>{
+        const target = document.getElementById(button.dataset.target);
+        if(!target)return;
+        if(button.dataset.target === "historySection"){ target.classList.remove("hidden"); renderHistory(); }
+        target.scrollIntoView({behavior:"smooth",block:"start"});
+        sideMenu.classList.remove("open");
+    });
+});
+
+/* =========================================
+   FILES
+========================================= */
+const fileInput = document.getElementById("fileInput");
+const fileList = document.getElementById("fileList");
+const analyzeButton = document.getElementById("analyzeButton");
+const clearButton = document.getElementById("clearButton");
+const exportButton = document.getElementById("exportButton");
+const progressBox = document.getElementById("progressBox");
+const progressFill = document.getElementById("progressFill");
+const progressText = document.getElementById("progressText");
+let selectedFiles=[];
+let records=[];
+let events=[];
+let applications=[];
+let appLifecycle=[];
+
+fileInput.addEventListener("change", ()=>{
+    selectedFiles = Array.from(fileInput.files);
+    renderFileList();
+    analyzeButton.disabled = selectedFiles.length === 0;
+});
+
+function renderFileList(){
+    fileList.innerHTML="";
+    selectedFiles.forEach(file=>{
+        const row = document.createElement("div");
+        row.className="file";
+        row.innerHTML=`<div class="file-name">◈ ${escapeHTML(file.name)}</div><div class="file-size">${formatSize(file.size)}</div>`;
+        fileList.appendChild(row);
+    });
+}
+
+/* =========================================
+   ANALYZE
+========================================= */
+analyzeButton.addEventListener("click", async()=>{
+    records=[]; events=[]; applications=[]; appLifecycle=[];
+    clearSearch();
+    analyzeButton.disabled=true;
+    exportButton.disabled=true;
+    progressBox.style.display="block";
+    setProgress(0,"Preparing evidence...");
+    for(let i=0; i<selectedFiles.length; i++){
+        setProgress(Math.round((i/selectedFiles.length)*20), "Reading "+selectedFiles[i].name+"...");
+        await processFile(selectedFiles[i]);
+    }
+    setProgress(55,"Extracting applications...");
+    runAnalysis();
+    setProgress(90,"Building timeline...");
+    saveHistory();
+    setProgress(100,"Analysis complete.");
+    analyzeButton.disabled=false;
+    analyzeButton.textContent="ANALYZE";
+    exportButton.disabled=false;
+});
+
+/* =========================================
+   ZIP / FILE PROCESSING
+========================================= */
+async function processFile(file){
+    if(file.name.toLowerCase().endsWith(".zip")){
+        try{
+            const zip = await JSZip.loadAsync(file, {createFolders:false, checkCRC32:false});
+            const paths = Object.keys(zip.files);
+            for(let i=0; i<paths.length; i++){
+                const path=paths[i];
+                const entry = zip.files[path];
+                if(entry.dir)continue;
+                try{
+                    const lower = path.toLowerCase();
+                    const likelyText = isTextEvidence(lower);
+                    if(likelyText){
+                        const content = await entry.async("string");
+                        addRecord(path, content, content.length, true);
+                    }else{
+                        if(entry._data){
+                            const content = await entry.async("string");
+                            addRecord(path, content, content.length, true);
+                        }else{
+                            addRecord(path, "", 0, true);
+                        }
+                    }
+                }catch{ addRecord(path, "", 0, true); }
+                if(i % 25 === 0){
+                    const percent = 20 + Math.round((i/Math.max(paths.length,1))*30);
+                    setProgress(Math.min(percent,50), "Reading ZIP: "+(i+1)+"/"+paths.length);
+                    await yieldThread();
+                }
+            }
+        }catch(error){ addRecord(file.name, "", file.size, false); }
+        return;
+    }
+    try{
+        const buffer = await file.arrayBuffer();
+        const bytes = new Uint8Array(buffer);
+        const text = new TextDecoder("utf-8", {fatal:false}).decode(bytes);
+        addRecord(file.name, text, file.size, false);
+    }catch{ addRecord(file.name, "", file.size, false); }
+}
+
+function isTextEvidence(name){
+    const extensions = [".txt",".log",".json",".xml",".plist",".mobileconfig",".ips",".csv",".html",".htm",".md",".conf",".config",".yaml",".yml",".strings",".db-wal",".db-shm"];
+    if(extensions.some(x=>name.endsWith(x)))return true;
+    const names = ["sysdiagnose","mobile_installed","mobileinstallation","installed","uninstalled","remov","install"];
+    return names.some(x=>name.includes(x));
+}
+
+function addRecord(name, text, size, insideZip){
+    const normalized = text || "";
+    records.push({name, text:normalized, size:size || 0, zip:insideZip});
+    extractDates(normalized, name);
+    extractApplications(normalized, name);
+    extractAppLifecycle(normalized, name);
+}
+
+function yieldThread(){ return new Promise(resolve=>{ setTimeout(resolve, 0); }); }
+
+function setProgress(percent, message){
+    progressFill.style.width = Math.max(0, Math.min(100, percent))+"%";
+    progressText.textContent = message;
+}
+
+/* =========================================
+   ANALYSIS
+========================================= */
+function runAnalysis(){
+    const all = records.map(r=>r.text).join("\n").toLowerCase();
+    detectDNS(all);
+    detectVPN(all);
+    detectProfiles(all);
+    detectCertificates(all);
+    detectApplications(all);
+    detectRemoval(all);
+    renderApplications();
+    renderPlist();
+    renderTimeline();
+    renderEvidence();
+    document.getElementById("statFiles").textContent = records.length;
+    document.getElementById("statEvents").textContent = events.length;
+}
+
+/* =========================================
+   DNS
+========================================= */
+const DNS = ["dns","nameserver","resolver","dnsconfig","resolv.conf","mdns","dnssuffix","dnssettings"];
+function detectDNS(text){
+    const refs = DNS.filter(x=>text.includes(x));
+    const ips = [...new Set((text.match(/\b(?:\d{1,3}\.){3}\d{1,3}\b/g) || []).filter(validIP))];
+    const total = refs.length + ips.length;
+    document.getElementById("statDns").textContent=total;
+    if(total){
+        setStatus("dnsStatus","warn","EVIDENCE");
+        setHTML("dnsDetails", `<b>References:</b> ${refs.map(escapeHTML).join(", ")||"—"}<br><br><b>IP addresses:</b><br>${ips.map(escapeHTML).join("<br>")||"—"}<br><br>Detected strings are evidence only.`);
+    }else{
+        setStatus("dnsStatus","ok","NOT DETECTED");
+        setText("dnsDetails","No recognizable DNS evidence.");
+    }
+}
+
+/* VPN */
+const VPN = ["vpn","networkextension","nesession","packet tunnel","packet-tunnel","ikev2","wireguard","openvpn","vpnconfiguration"];
+function detectVPN(text){
+    const found = VPN.filter(x=>text.includes(x));
+    if(found.length){
+        setStatus("vpnStatus","warn","EVIDENCE");
+        setHTML("vpnDetails", `<b>Indicators:</b><br>${found.map(escapeHTML).join(", ")}`);
+    }else{
+        setStatus("vpnStatus","ok","NOT DETECTED");
+        setText("vpnDetails","No recognizable VPN evidence.");
+    }
+}
+
+/* PROFILES */
+const PROFILE = ["mobileconfig","payloadcontent","payloadtype","mdm","managedconfiguration","profileidentifier","configuration profile","com.apple.mdm","msprofile"];
+function detectProfiles(text){
+    const found = PROFILE.filter(x=>text.includes(x));
+    if(found.length){
+        setStatus("profileStatus","warn","EVIDENCE");
+        setHTML("profileDetails", `<b>Indicators:</b><br>${found.map(escapeHTML).join(", ")}`);
+    }else{
+        setStatus("profileStatus","ok","NOT DETECTED");
+        setText("profileDetails","No recognizable profile evidence.");
+    }
+}
+
+/* CERTIFICATES */
+const CERT = ["certificate","certificates","root ca","trusted certificate","trustsettings","trust store","x509"];
+function detectCertificates(text){
+    const found = CERT.filter(x=>text.includes(x));
+    if(found.length){
+        setStatus("certStatus","warn","EVIDENCE");
+        setHTML("certDetails", `<b>Indicators:</b><br>${found.map(escapeHTML).join(", ")}`);
+    }else{
+        setStatus("certStatus","ok","NOT DETECTED");
+        setText("certDetails","No recognizable certificate evidence.");
+    }
+}
+
+/* =========================================
+   APPLICATIONS
+========================================= */
+const APP_PATTERNS = ["bundleidentifier","bundle id","applicationidentifier","applicationdisplayname","cfbundleidentifier","cfbundledisplayname","mobileinstallation","app installation","installed app","installation","mobile_installed"];
+function detectApplications(text){
+    const refs = APP_PATTERNS.filter(x=>text.includes(x));
+    const bundles = extractBundles(text);
+    const knownCount = new Set(
+        bundles.concat(applications.map(a=>a.bundle), appLifecycle.map(a=>a.bundle))
+            .map(canonicalBundle)
+            .filter(Boolean)
+    ).size;
+    document.getElementById("statApps").textContent = knownCount;
+    if(refs.length || bundles.length || applications.length || appLifecycle.length){
+        setStatus("appStatus","blue","EVIDENCE");
+        setHTML("appDetails", `<b>References:</b><br>${refs.map(escapeHTML).join(", ")||"—"}<br><br><b>Bundle IDs:</b><br>${bundles.map(escapeHTML).join("<br>")||"—"}<br><br><b>Application records:</b> ${applications.length}<br><b>Install / removal records:</b> ${appLifecycle.length}`);
+    }else{
+        setStatus("appStatus","ok","NOT DETECTED");
+        setText("appDetails","No application evidence found.");
+    }
+}
+
+/*
+   APPLICATION IDENTITY / ICON ENGINE
+   Priority:
+   1) exact bundle mapping
+   2) known app/name aliases
+   3) official/domain favicon
+   4) generated initials fallback
+*/
+const APP_ICON_DB = {
+    /* Apple / popular apps */
+    "com.burbn.instagram": {name:"Instagram", domain:"instagram.com"},
+    "com.facebook.Facebook": {name:"Facebook", domain:"facebook.com"},
+    "com.facebook.Messenger": {name:"Messenger", domain:"messenger.com"},
+    "net.whatsapp.WhatsApp": {name:"WhatsApp", domain:"whatsapp.com"},
+    "com.google.Gmail": {name:"Gmail", domain:"gmail.com"},
+    "com.google.Maps": {name:"Google Maps", domain:"maps.google.com"},
+    "com.google.YouTube": {name:"YouTube", domain:"youtube.com"},
+    "com.zhiliaoapp.musically": {name:"TikTok", domain:"tiktok.com"},
+    "com.spotify.client": {name:"Spotify", domain:"spotify.com"},
+    "com.twitter.twitter": {name:"X / Twitter", domain:"x.com"},
+    "com.discord.Discord": {name:"Discord", domain:"discord.com"},
+    "com.telegram.Telegram": {name:"Telegram", domain:"telegram.org"},
+    "ph.telegra.Telegraph": {name:"Telegraph", domain:"telegra.ph"},
+    "com.apple.mobilesafari": {name:"Safari", domain:"apple.com"},
+    "com.apple.MobileSMS": {name:"Messages", domain:"apple.com"},
+    "com.apple.Preferences": {name:"Settings", domain:"apple.com"},
+    "com.apple.AppStore": {name:"App Store", domain:"apple.com"},
+    "com.apple.camera": {name:"Camera", domain:"apple.com"},
+    "com.apple.Music": {name:"Music", domain:"apple.com"},
+
+    /* iOS signing / file tools */
+    "com.tigisoftware.Filza": {name:"Filza", domain:"tigisoftware.com"},
+    "com.tigisoftware.Filza64bit": {name:"Filza", domain:"tigisoftware.com"},
+    "com.khoindvn.ESign": {name:"ESign", domain:"khoindvn.com"},
+    "khoindvn.ESign": {name:"ESign", domain:"khoindvn.com"},
+    "com.gbox.gbox": {name:"GBox", domain:"gbox.run"},
+    "com.gbox.GBox": {name:"GBox", domain:"gbox.run"},
+    "com.gbox.gbox2": {name:"GBox", domain:"gbox.run"},
+    "com.feather.Feather": {name:"Feather", domain:"featherapp.org"},
+    "com.khoindvn.KSign": {name:"KSign", domain:"khoindvn.com"},
+    "com.khoindvn.KSign2": {name:"KSign", domain:"khoindvn.com"},
+    "com.opa334.TrollStore": {name:"TrollStore", domain:"github.com"},
+    "com.opa334.TrollStore2": {name:"TrollStore 2", domain:"github.com"},
+    "com.iosGods.iGameGod": {name:"iGameGod", domain:"iosgods.com"},
+    "com.sideloadly.Sideloadly": {name:"Sideloadly", domain:"sideloadly.io"},
+
+    /* Common jailbreak / package managers */
+    "org.coolstar.SileoStore": {name:"Sileo", domain:"getsileo.app"},
+    "com.opa334.Dopamine": {name:"Dopamine", domain:"ellekit.space"},
+    "com.exile90.icleanerpro": {name:"iCleaner Pro", domain:"exile90software.com"},
+    "com.spark.snowboard": {name:"SnowBoard", domain:"github.com"},
+
+    /* Games / frequently seen apps */
+    "com.dts.freefireth": {name:"Free Fire", domain:"ff.garena.com"},
+    "com.dts.freefiremax": {name:"Free Fire MAX", domain:"ff.garena.com"},
+    "com.activision.callofduty.shooter": {name:"Call of Duty Mobile", domain:"callofduty.com"},
+    "com.tencent.ig": {name:"PUBG MOBILE", domain:"pubgmobile.com"},
+    "com.supercell.clashofclans": {name:"Clash of Clans", domain:"supercell.com"},
+    "com.supercell.brawlstars": {name:"Brawl Stars", domain:"supercell.com"},
+    "com.roblox.robloxmobile": {name:"Roblox", domain:"roblox.com"}
+};
+
+/* Aliases catch renamed/signed/cloned variants where the bundle suffix changes. */
+const APP_ALIASES = [
+    {keys:["filza"], name:"Filza", domain:"tigisoftware.com"},
+    {keys:["esign","e-sign"], name:"ESign", domain:"khoindvn.com"},
+    {keys:["gbox"], name:"GBox", domain:"gbox.run"},
+    {keys:["ksign"], name:"KSign", domain:"khoindvn.com"},
+    {keys:["trollstore"], name:"TrollStore", domain:"github.com"},
+    {keys:["sileo"], name:"Sileo", domain:"getsileo.app"},
+    {keys:["feather"], name:"Feather", domain:"featherapp.org"},
+    {keys:["instagram"], name:"Instagram", domain:"instagram.com"},
+    {keys:["whatsapp"], name:"WhatsApp", domain:"whatsapp.com"},
+    {keys:["telegram"], name:"Telegram", domain:"telegram.org"},
+    {keys:["discord"], name:"Discord", domain:"discord.com"},
+    {keys:["tiktok","musically"], name:"TikTok", domain:"tiktok.com"},
+    {keys:["youtube"], name:"YouTube", domain:"youtube.com"},
+    {keys:["spotify"], name:"Spotify", domain:"spotify.com"},
+    {keys:["twitter","com.x."], name:"X / Twitter", domain:"x.com"},
+    {keys:["facebook"], name:"Facebook", domain:"facebook.com"},
+    {keys:["messenger"], name:"Messenger", domain:"messenger.com"},
+    {keys:["freefire","free fire","freefiremax"], name:"Free Fire", domain:"ff.garena.com"},
+    {keys:["pubg"], name:"PUBG MOBILE", domain:"pubgmobile.com"},
+    {keys:["roblox"], name:"Roblox", domain:"roblox.com"},
+    {keys:["callofduty","codmobile"], name:"Call of Duty Mobile", domain:"callofduty.com"},
+    {keys:["clashofclans"], name:"Clash of Clans", domain:"supercell.com"},
+    {keys:["brawlstars"], name:"Brawl Stars", domain:"supercell.com"}
+];
+
+function canonicalBundle(bundle){
+    return String(bundle || "").trim().replace(/^["'<]+|[>"']+$/g,"");
+}
+
+function resolveAppIdentity(bundle, discoveredName="", source=""){
+    const b = canonicalBundle(bundle);
+    const low = (b+" "+discoveredName+" "+source).toLowerCase();
+
+    if(APP_ICON_DB[b]) return {...APP_ICON_DB[b], bundle:b, confidence:"EXACT BUNDLE"};
+
+    for(const alias of APP_ALIASES){
+        if(alias.keys.some(k=>low.includes(k.toLowerCase()))){
+            return {...alias, bundle:b, confidence:"NAME / PATH MATCH"};
+        }
+    }
+
+    /* Generic domains for common reverse-DNS publishers. */
+    const domain = inferDomainFromBundle(b);
+    return {
+        name: discoveredName && discoveredName !== b ? discoveredName : prettyBundleName(b),
+        domain,
+        bundle:b,
+        confidence:"BUNDLE MATCH"
+    };
+}
+
+function inferDomainFromBundle(bundle){
+    const parts = canonicalBundle(bundle).split(".");
+    if(parts.length < 2) return "";
+    const joined = parts.join(" ").toLowerCase();
+    if(joined.includes("apple")) return "apple.com";
+    if(joined.includes("google")) return "google.com";
+    if(joined.includes("microsoft")) return "microsoft.com";
+    if(joined.includes("adobe")) return "adobe.com";
+    return "";
+}
+
+function prettyBundleName(bundle){
+    const parts = canonicalBundle(bundle).split(".");
+    const last = parts[parts.length-1] || bundle;
+    return last.replace(/[_-]+/g," ").replace(/([a-z])([A-Z])/g,"$1 $2").trim();
+}
+
+function iconURL(identity){
+    if(!identity || !identity.domain) return "";
+    /* Google favicon endpoint gives a real site/app brand mark without shipping a huge icon database. */
+    return "https://www.google.com/s2/favicons?sz=128&domain="+encodeURIComponent(identity.domain);
+}
+
+function fallbackInitials(name, bundle){
+    const value = String(name || bundle || "?").replace(/[^A-Za-z0-9]+/g," ").trim();
+    const words = value.split(/\s+/).filter(Boolean);
+    return (words.length > 1 ? words[0][0]+words[1][0] : value.slice(0,2)).toUpperCase();
+}
+
+function appIconHTML(identity, sizeClass="app-icon"){
+    const url = iconURL(identity);
+    const initials = escapeHTML(fallbackInitials(identity.name, identity.bundle));
+    if(!url) return `<span class="app-icon-fallback">${initials}</span>`;
+    return `<img class="${sizeClass}" src="${escapeHTML(url)}" alt="${escapeHTML(identity.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<span class=&quot;app-icon-fallback&quot;>${initials}</span>'">`;
+}
+
+function extractApplications(text, source){
+    const bundles = extractBundles(text);
+    bundles.slice(0,500).forEach(bundle=>{
+        const name = findAppNameNearBundle(text, bundle);
+        const identity = resolveAppIdentity(bundle, name, source);
+        applications.push({
+            name: identity.name,
+            bundle: identity.bundle,
+            source,
+            evidence: /install/i.test(text) ? "Installation-related reference" : "Bundle identifier reference",
+            icon: identity.domain,
+            confidence: identity.confidence
+        });
+    });
+}
+
+function findAppNameNearBundle(text, bundle){
+    const index = text.toLowerCase().indexOf(bundle.toLowerCase());
+    const windowText = index >= 0
+        ? text.substring(Math.max(0,index-900), Math.min(text.length,index+1200))
+        : text;
+
+    const patterns = [
+        /CFBundleDisplayName[\s\S]{0,300}?<string>\s*([^<]+?)\s*<\/string>/i,
+        /CFBundleName[\s\S]{0,300}?<string>\s*([^<]+?)\s*<\/string>/i,
+        /(?:applicationDisplayName|appName|displayName|name)\s*[\s:=\"]{1,30}([^\"<\n,}]+)/i
+    ];
+    for(const regex of patterns){
+        const match = windowText.match(regex);
+        if(match){
+            const value = match[1].trim();
+            if(value && value.length < 160 && !/^(bundle|identifier|id)$/i.test(value)) return value;
+        }
+    }
+    return "";
+}
+
+function findAppName(text, bundle){
+    return findAppNameNearBundle(text,bundle) || resolveAppIdentity(bundle).name;
+}
+
+function extractBundles(text){
+    const matches = text.match(
+        /\b(?:com|net|org|io|me|app|dev|tv|co|uk|xyz|gg|ai)\.[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)+\b/g
+    ) || [];
+
+    /* Also capture explicit Bundle ID fields even when the prefix is unusual. */
+    const explicit = [];
+    const rx = /(?:CFBundleIdentifier|bundleIdentifier|bundle_id|bundleId|applicationIdentifier|packageName)\s*[\s:="]+([A-Za-z0-9._-]{5,180})/gi;
+    let m;
+    while((m=rx.exec(text))!==null) explicit.push(m[1]);
+
+    return [...new Set(matches.concat(explicit).map(canonicalBundle))]
+        .filter(x=>x && x.split(".").length >= 3)
+        .slice(0,1000);
+}
+
+function dedupeApplications(list){
+    const map = new Map();
+    list.forEach(app=>{
+        const key = canonicalBundle(app.bundle).toLowerCase();
+        const old = map.get(key);
+        if(!old || (app.confidence==="EXACT BUNDLE" && old.confidence!=="EXACT BUNDLE")) map.set(key,app);
+    });
+    return [...map.values()];
+}
+
+/* =========================================
+   APP INSTALL / REMOVE READER
+========================================= */
+function extractAppLifecycle(text, source){
+    const isMobileInstalled = /(^|[\/\\])logs[\/\\]mobile_installed[\/\\]files/i.test(source) || source.toLowerCase().includes("mobile_installed");
+    const hasLifecycleWords = /\b(installed|install|removed|remove|deleted|delete|uninstalled|uninstall|revoked|revoke)\b/i.test(text);
+    if(!isMobileInstalled && !hasLifecycleWords) return;
+
+    const bundles = extractBundles(text);
+    if(!bundles.length){
+        const fallback = text.match(/(?:bundleIdentifier|bundle_id|bundleId|applicationIdentifier|packageName)[\s:="]+([A-Za-z0-9._-]+)/gi) || [];
+        fallback.forEach(raw=>{
+            const m = raw.match(/(?:bundleIdentifier|bundle_id|bundleId|applicationIdentifier|packageName)[\s:="]+([A-Za-z0-9._-]+)/i);
+            if(m) bundles.push(m[1]);
+        });
+    }
+
+    const uniqueBundles = [...new Set(bundles)];
+    const dates = extractDatesFromText(text);
+    uniqueBundles.slice(0,500).forEach(bundle=>{
+        const context = getBundleContext(text, bundle);
+        const lifecycle = classifyLifecycle(context, source);
+        if(!lifecycle)return;
+        const date = dates.length ? chooseClosestDate(dates, context, text) : null;
+        const identity = resolveAppIdentity(bundle, findAppNameNearBundle(text,bundle), source);
+        appLifecycle.push({
+            bundle,
+            name:identity.name,
+            action:lifecycle,
+            date,
+            source,
+            path:source,
+            context:context.slice(0,700)
+        });
+    });
+}
+
+function classifyLifecycle(context, source){
+    const x = (context+" "+source).toLowerCase();
+    if(/\b(uninstalled|uninstall|removed|remove|deleted|delete)\b/.test(x)) return "REMOVED";
+    if(/\b(installed|install|installation)\b/.test(x)) return "INSTALLED";
+    if(/\b(revoked|revoke|revocation)\b/.test(x)) return "REVOKED";
+    return null;
+}
+
+function getBundleContext(text, bundle){
+    const index = text.toLowerCase().indexOf(bundle.toLowerCase());
+    if(index<0) return text.slice(0,700);
+    return text.substring(Math.max(0,index-450), Math.min(text.length,index+700)).replace(/\s+/g," ");
+}
+
+function extractDatesFromText(text){
+    const results=[];
+    const patterns = [
+        /\b20\d{2}[-\/]\d{1,2}[-\/]\d{1,2}(?:[T\s]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:?\d{2})?)?/g,
+        /\b\d{1,2}[-\/]\d{1,2}[-\/]20\d{2}(?:[T\s]\d{2}:\d{2}(?::\d{2})?)?/g
+    ];
+    patterns.forEach(regex=>{
+        let match;
+        while((match=regex.exec(text))!==null){
+            const date = parseDate(match[0]);
+            if(date) results.push({date, index:match.index, raw:match[0]});
+        }
+    });
+    return results;
+}
+
+function chooseClosestDate(dates, context, fullText){
+    if(!dates.length)return null;
+    const firstIndex = fullText.indexOf(context);
+    if(firstIndex<0) return dates[dates.length-1].date;
+    let best = dates[0];
+    let distance = Math.abs(dates[0].index-firstIndex);
+    dates.forEach(d=>{
+        const current = Math.abs(d.index-firstIndex);
+        if(current<distance){ distance=current; best=d; }
+    });
+    return best.date;
+}
+
+function renderApplications(){
+    const box = document.getElementById("appsResults");
+
+    const all = [];
+    applications.forEach(app=>{
+        const identity = resolveAppIdentity(app.bundle, app.name, app.source);
+        all.push({
+            name:identity.name,
+            bundle:app.bundle,
+            action:"EVIDENCE",
+            date:null,
+            source:app.source,
+            context:app.evidence,
+            confidence:identity.confidence,
+            identity
+        });
+    });
+
+    appLifecycle.forEach(item=>{
+        const identity = resolveAppIdentity(item.bundle, item.name, item.source);
+        const existing = all.find(x=>x.bundle===item.bundle && x.action===item.action && x.date && item.date && x.date.getTime()===item.date.getTime());
+        if(!existing){
+            all.push({
+                name:identity.name,
+                bundle:item.bundle,
+                action:item.action,
+                date:item.date,
+                source:item.source,
+                context:item.context,
+                confidence:identity.confidence,
+                identity
+            });
+        }
+    });
+
+    if(!all.length){
+        box.innerHTML = '<div class="empty">No application evidence found.</div>';
+        return;
+    }
+
+    const unique=[];
+    const seen=new Set();
+    all.forEach(app=>{
+        const key=[app.bundle,app.action,app.date?app.date.getTime():"none"].join("|");
+        if(!seen.has(key)){seen.add(key);unique.push(app);}
+    });
+
+    box.innerHTML = unique.slice(0,1000).map(app=>{
+        const actionClass = app.action==="REMOVED" ? "bad" : app.action==="INSTALLED" ? "ok" : "blue";
+        const actionGlyph = app.action==="REMOVED" ? "⌁" : app.action==="INSTALLED" ? "✦" : "◈";
+        return `
+        <div class="app-item">
+            <div class="app-row">
+                ${appIconHTML(app.identity)}
+                <div class="app-main">
+                    <div class="app-name-line">
+                        <div class="app-name">${escapeHTML(app.name)}</div>
+                        <span class="app-source">${escapeHTML(app.confidence || "MATCH")}</span>
+                    </div>
+                    <div class="app-bundle">Bundle ID: ${escapeHTML(app.bundle)}</div>
+                    <div class="app-evidence">
+                        <span class="status ${actionClass}">${actionGlyph} ${escapeHTML(app.action)}</span>
+                        ${app.date ? `<br><b>Date:</b> ${formatDate(app.date)}` : `<br><b>Date:</b> No timestamp linked to this record.`}
+                        <br><b>Source:</b> ${escapeHTML(app.source)}
+                        ${app.context ? `<br><br><b>Evidence:</b> ${escapeHTML(app.context.slice(0,500))}` : ""}
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    }).join("");
+}
+
+/* =========================================
+   REMOVAL
+========================================= */
+const REMOVAL = ["deleted","delete","removed","remove","uninstalled","uninstall","revoked","revoke","revocation"];
+function detectRemoval(text){
+    const found = REMOVAL.filter(x=>text.includes(x));
+    if(found.length || appLifecycle.some(x=>x.action==="REMOVED" || x.action==="REVOKED")){
+        setStatus("removeStatus","warn","EVIDENCE");
+        const removals = appLifecycle.filter(x=>x.action==="REMOVED" || x.action==="REVOKED");
+        setHTML("removeDetails", `<b>Indicators:</b><br>${found.map(escapeHTML).join(", ")||"Application lifecycle records"}<br><br><b>Removal records:</b> ${removals.length}<br><br>Open Applications for the bundle ID and linked date/time.`);
+    }else{
+        setStatus("removeStatus","ok","NOT DETECTED");
+        setText("removeDetails","No recognizable removal evidence.");
+    }
+}
+
+/* =========================================
+   DATES / TIMELINE
+========================================= */
+function extractDates(text, source){
+    const patterns = [
+        /\b20\d{2}[-\/]\d{1,2}[-\/]\d{1,2}(?:[T\s]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:?\d{2})?)?/g,
+        /\b\d{1,2}[-\/]\d{1,2}[-\/]20\d{2}(?:[T\s]\d{2}:\d{2}(?::\d{2})?)?/g
+    ];
+    patterns.forEach(regex=>{
+        let match;
+        while((match=regex.exec(text)) !== null){
+            const date = parseDate(match[0]);
+            if(!date)continue;
+            const context = text.substring(Math.max(0,match.index-160), Math.min(text.length, match.index+300)).replace(/\s+/g," ");
+            events.push({date, source, context, type:classify(context)});
+        }
+    });
+}
+
+function parseDate(raw){
+    let m = raw.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})(?:[T\s](\d{2}):(\d{2})(?::(\d{2}))?)?/);
+    if(m){
+        const d = new Date(Number(m[1]), Number(m[2])-1, Number(m[3]), Number(m[4]||0), Number(m[5]||0), Number(m[6]||0));
+        return validDate(d) ? d : null;
+    }
+    m = raw.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](20\d{2})(?:[T\s](\d{2}):(\d{2})(?::(\d{2}))?)?/);
+    if(m){
+        const d = new Date(Number(m[3]), Number(m[2])-1, Number(m[1]), Number(m[4]||0), Number(m[5]||0), Number(m[6]||0));
+        return validDate(d) ? d : null;
+    }
+    return null;
+}
+
+function classify(context){
+    const x = context.toLowerCase();
+    if(x.includes("revok")) return "Possible revocation";
+    if(x.includes("uninstall") || x.includes("deleted") || x.includes("removed")) return "Possible removal";
+    if(x.includes("install") || x.includes("installed")) return "Possible installation";
+    if(x.includes("dns")) return "DNS event";
+    if(x.includes("vpn")) return "VPN event";
+    if(x.includes("mdm") || x.includes("profile") || x.includes("mobileconfig")) return "Profile / MDM event";
+    if(x.includes("http://") || x.includes("https://") || x.includes("url") || x.includes("uri")) return "URL / Web event";
+    return "System event";
+}
+
+/* =========================================
+   TIMELINE
+========================================= */
+function renderTimeline(){
+    const box = document.getElementById("timeline");
+    const lifecycleEvents = appLifecycle.filter(x=>x.date).map(x=>({
+        date:x.date,
+        type: x.action==="REMOVED" ? "APP REMOVED" : x.action==="INSTALLED" ? "APP INSTALLED" : "APP REVOKED",
+        source:x.source,
+        context: x.bundle+" · "+x.context.slice(0,350)
+    }));
+    const combined = events.concat(lifecycleEvents);
+    if(!combined.length){ box.innerHTML = '<div class="empty">No timestamped evidence.</div>'; return; }
+    combined.sort((a,b)=>a.date-b.date);
+    box.innerHTML = combined.slice(0,500).map(e=>`
+        <div class="event">
+            <div class="event-date">${formatDate(e.date)}</div>
+            <div class="event-type">${escapeHTML(e.type)}</div>
+            <div class="event-source">${escapeHTML(e.source)}</div>
+            <div class="event-context">${escapeHTML(e.context)}</div>
+        </div>`).join("");
+}
+
+/* =========================================
+   PLIST
+========================================= */
+function renderPlist(){
+    const box = document.getElementById("plistResults");
+    const list = records.filter(r=>{
+        const n = r.name.toLowerCase();
+        return n.endsWith(".plist") || n.endsWith(".mobileconfig") || n.includes("msprofile");
+    });
+    if(!list.length){ box.textContent = "No PLIST / MSPROFILE / MOBILECONFIG analyzed."; return; }
+    box.innerHTML = list.map(r=>{
+        const keys = [...r.text.matchAll(/<key>\s*([^<]+)<\/key>/gi)].map(x=>x[1]).filter((x,i,a)=>a.indexOf(x)===i).slice(0,150);
+        return `<div class="app-item"><div class="app-name">${escapeHTML(r.name)}</div><div class="app-evidence">Size: ${formatSize(r.size)}<br>Source: ${r.zip?"ZIP":"DIRECT"}<br><br><b>Keys:</b><br>${keys.map(escapeHTML).join("<br>")||"No XML keys detected."}</div></div>`;
+    }).join("");
+}
+
+/* =========================================
+   EVIDENCE
+========================================= */
+function renderEvidence(){
+    const box = document.getElementById("evidence");
+    if(!records.length){ box.innerHTML = '<div class="empty">No files analyzed.</div>'; return; }
+    box.innerHTML = records.map(r=>{
+        const text = r.text.toLowerCase();
+        const cats=[];
+        if(DNS.some(k=>text.includes(k)))cats.push("DNS");
+        if(VPN.some(k=>text.includes(k)))cats.push("VPN");
+        if(PROFILE.some(k=>text.includes(k)))cats.push("PROFILE");
+        if(CERT.some(k=>text.includes(k)))cats.push("CERT");
+        if(APP_PATTERNS.some(k=>text.includes(k)))cats.push("APP");
+        if(REMOVAL.some(k=>text.includes(k)))cats.push("REMOVAL");
+        if(r.name.toLowerCase().includes("telegram") || text.includes("telegram") || text.includes("ph.telegra"))cats.push("TELEGRAM");
+        if(text.includes("http://") || text.includes("https://"))cats.push("URL");
+        const eventCount = events.filter(e=>e.source===r.name).length;
+        const lifecycleCount = appLifecycle.filter(e=>e.source===r.name).length;
+        return `<div class="history-item"><div class="history-top"><div class="history-id">◈ ${escapeHTML(r.name)}</div><div class="history-time">${formatSize(r.size)}</div></div><div class="history-info"><b>Source:</b> ${r.zip?"ZIP":"DIRECT"}<br><b>Categories:</b> ${cats.join(" · ")||"None"}<br><b>Timeline events:</b> ${eventCount}<br><b>App lifecycle events:</b> ${lifecycleCount}</div></div>`;
+    }).join("");
+}
+
+/* =========================================
+   SEARCH ENGINE
+========================================= */
+const URL_REGEX = /\bhttps?:\/\/[^\s<>"'`]+/gi;
+const DOMAIN_REGEX = /\b(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}\b/gi;
+const SEARCH_DATE_PATTERNS = [
+    /\b20\d{2}[-\/]\d{1,2}[-\/]\d{1,2}(?:[T\s]\d{2}:\d{2}(?::\d{2})?(?:Z|[+-]\d{2}:?\d{2})?)?/gi,
+    /\b\d{1,2}[-\/]\d{1,2}[-\/]20\d{2}(?:[T\s]\d{2}:\d{2}(?::\d{2})?)?/gi
+];
+const globalSearch = document.getElementById("globalSearch");
+const globalSearchClear = document.getElementById("globalSearchClear");
+const searchMeta = document.getElementById("searchMeta");
+const searchResults = document.getElementById("searchResults");
+
+function normalizeSearch(value){ return String(value || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""); }
+function searchTerms(value){ return normalizeSearch(value).split(/\s+/).map(x=>x.trim()).filter(Boolean); }
+function recordContainsTerms(record, terms){ if(!terms.length)return false; const haystack = normalizeSearch(record.name+"\n"+record.text); return terms.every(term=>haystack.includes(term)); }
+
+function getSearchContext(text, query){
+    const normalized = normalizeSearch(text);
+    const normalizedQuery = normalizeSearch(query);
+    const index = normalized.indexOf(normalizedQuery);
+    if(index>=0){ return text.slice(Math.max(0,index-260), Math.min(text.length, index+700)).replace(/\s+/g," "); }
+    const terms = searchTerms(query);
+    for(const term of terms){
+        const i = normalized.indexOf(term);
+        if(i>=0) return text.slice(Math.max(0,i-220), Math.min(text.length, i+650)).replace(/\s+/g," ");
+    }
+    return text.slice(0,700).replace(/\s+/g," ");
+}
+
+function highlightSearch(value, query){
+    let html = escapeHTML(value);
+    const terms = [...new Set(searchTerms(query))].sort((a,b)=>b.length-a.length);
+    terms.forEach(term=>{
+        if(!term)return;
+        const escaped = term.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+        try{ html = html.replace(new RegExp(escaped,"gi"), match=>`<span class="search-highlight">${match}</span>`); }catch{}
+    });
+    return html;
+}
+
+function pushSearchResult(results, type, title, source, context, date){ results.push({type:type||"EVIDENCE",title:title||"Evidence",source:source||"Unknown",context:context||"",date:date||null}); }
+
+function searchURLsInRecord(record, query, results){
+    const text = record.text || "";
+    const terms = searchTerms(query);
+    if(!terms.length)return;
+    const urlMatches = text.match(URL_REGEX) || [];
+    const domainMatches = text.match(DOMAIN_REGEX) || [];
+    [...new Set(urlMatches)].slice(0,200).forEach(url=>{ if(terms.every(term=>normalizeSearch(url).includes(term))) pushSearchResult(results,"URL",url,record.name,getSearchContext(text,url),null); });
+    [...new Set(domainMatches)].slice(0,300).forEach(domain=>{ if(terms.every(term=>normalizeSearch(domain).includes(term))) pushSearchResult(results,"DOMAIN",domain,record.name,getSearchContext(text,domain),null); });
+}
+
+function searchDatesInRecord(record, query, results){
+    const terms = searchTerms(query);
+    if(!terms.length)return;
+    const text = record.text || "";
+    const dates=[];
+    SEARCH_DATE_PATTERNS.forEach(regex=>{
+        const local = new RegExp(regex.source, regex.flags);
+        let match;
+        while((match=local.exec(text))!==null){ dates.push({raw:match[0],index:match.index}); }
+    });
+    dates.slice(0,300).forEach(item=>{
+        if(terms.every(term=>normalizeSearch(item.raw).includes(term))) pushSearchResult(results,"DATE / TIME",item.raw,record.name,text.substring(Math.max(0,item.index-220), Math.min(text.length, item.index+500)).replace(/\s+/g," "),parseDate(item.raw));
+    });
+}
+
+function performGlobalSearch(query){
+    const clean = String(query || "").trim();
+    if(!clean){ searchMeta.textContent = records.length ? "Search all loaded evidence after analysis." : "No evidence loaded."; searchResults.innerHTML = '<div class="empty">No search performed.</div>'; return; }
+    if(!records.length){ searchMeta.textContent = "No files have been analyzed yet."; searchResults.innerHTML = '<div class="empty">Analyze a file or ZIP first.</div>'; return; }
+    const terms = searchTerms(clean);
+    const results=[];
+    records.forEach(record=>{
+        if(recordContainsTerms(record, terms)) pushSearchResult(results,"FILE EVIDENCE",record.name,record.name,getSearchContext(record.text, clean),null);
+        searchURLsInRecord(record, clean, results);
+        searchDatesInRecord(record, clean, results);
+    });
+    applications.forEach(item=>{
+        const hay = normalizeSearch([item.name,item.bundle,item.source,item.evidence].join(" "));
+        if(terms.every(term=>hay.includes(term))) pushSearchResult(results,"APPLICATION",item.name,item.source,item.bundle+" · "+item.evidence,null);
+    });
+    appLifecycle.forEach(item=>{
+        const hay = normalizeSearch([item.bundle,item.action,item.source,item.context,item.date?formatDate(item.date):""].join(" "));
+        if(terms.every(term=>hay.includes(term))) pushSearchResult(results,"APP LIFECYCLE",item.bundle+" · "+item.action,item.source,item.context,item.date);
+    });
+    events.forEach(event=>{
+        const hay = normalizeSearch([event.type,event.source,event.context,event.date?formatDate(event.date):""].join(" "));
+        if(terms.every(term=>hay.includes(term))) pushSearchResult(results,"TIMELINE",event.type,event.source,event.context,event.date);
+    });
+    const unique=[];
+    const seen=new Set();
+    results.forEach(result=>{
+        const key = [result.type,result.title,result.source,result.context].join("|");
+        if(!seen.has(key)){ seen.add(key); unique.push(result); }
+    });
+    const limited = unique.slice(0,1000);
+    searchMeta.textContent = limited.length+" result"+(limited.length===1?"":"s")+" found for “"+clean+"” · searched "+records.length+" file"+(records.length===1?"":"s");
+    if(!limited.length){ searchResults.innerHTML = `<div class="empty">No matches found for “${escapeHTML(clean)}”.</div>`; return; }
+    searchResults.innerHTML = limited.map(result=>`
+        <div class="search-item">
+            <div class="search-title">${highlightSearch(result.title, clean)}</div>
+            <span class="search-type">${escapeHTML(result.type)}</span>
+            ${result.date ? `<div class="search-date">${formatDate(result.date)}</div>` : ""}
+            <div class="search-source">Source: ${highlightSearch(result.source, clean)}</div>
+            ${result.context ? `<div class="search-context">${highlightSearch(result.context.slice(0,1200), clean)}</div>` : ""}
+        </div>`).join("");
+}
+
+function clearSearch(){
+    globalSearch.value="";
+    searchMeta.textContent = records.length ? "Search all loaded evidence after analysis." : "No evidence loaded.";
+    searchResults.innerHTML = '<div class="empty">No search performed.</div>';
+}
+
+globalSearch.addEventListener("input", ()=>{ performGlobalSearch(globalSearch.value); });
+globalSearch.addEventListener("keydown", event=>{ if(event.key==="Escape"){ clearSearch(); } });
+globalSearchClear.addEventListener("click", clearSearch);
+document.addEventListener("keydown", event=>{
+    if(event.key==="/" && document.activeElement!==passwordInput && document.activeElement!==globalSearch && app.style.display==="block"){
+        event.preventDefault(); globalSearch.focus();
+    }
+});
+
+/* =========================================
+   HISTORY
+========================================= */
+function saveHistory(){
+    const history = JSON.parse(localStorage.getItem("methodCheckHistory") || "[]");
+    const item = {
+        id: "REV-"+Date.now().toString().slice(-8),
+        date: new Date().toISOString(),
+        files: records.map(r=>r.name),
+        fileCount: records.length,
+        events: events.length,
+        dns: document.getElementById("statDns").textContent,
+        apps: document.getElementById("statApps").textContent,
+        lifecycle: appLifecycle.length
+    };
+    history.unshift(item);
+    localStorage.setItem("methodCheckHistory", JSON.stringify(history.slice(0,100)));
+    renderHistory();
+}
+
+function renderHistory(){
+    const box = document.getElementById("historyList");
+    const history = JSON.parse(localStorage.getItem("methodCheckHistory") || "[]");
+    if(!history.length){ box.innerHTML = '<div class="empty">No previous reviews.</div>'; return; }
+    box.innerHTML = history.map(h=>`
+        <div class="history-item">
+            <div class="history-top"><div class="history-id">${escapeHTML(h.id)}</div><div class="history-time">${formatDate(new Date(h.date))}</div></div>
+            <div class="history-info"><b>Files:</b> ${h.fileCount}<br><b>Events:</b> ${h.events}<br><b>DNS / IP:</b> ${h.dns}<br><b>Bundle IDs:</b> ${h.apps}<br><b>App lifecycle:</b> ${h.lifecycle || 0}<br><br><b>Reviewed files:</b><br>${h.files.map(escapeHTML).join("<br>")}</div>
+        </div>`).join("");
+}
+
+document.getElementById("clearHistory").addEventListener("click", ()=>{ localStorage.removeItem("methodCheckHistory"); renderHistory(); });
+
+/* =========================================
+   CLEAR
+========================================= */
+clearButton.addEventListener("click", ()=>{
+    fileInput.value="";
+    selectedFiles=[]; records=[]; events=[]; applications=[]; appLifecycle=[];
+    fileList.innerHTML="";
+    analyzeButton.disabled=true; exportButton.disabled=true;
+    progressBox.style.display="none"; progressFill.style.width="0%";
+    document.getElementById("statFiles").textContent="0";
+    document.getElementById("statEvents").textContent="0";
+    document.getElementById("statDns").textContent="0";
+    document.getElementById("statApps").textContent="0";
+    resetAnalysis(); clearSearch();
+    document.getElementById("appsResults").innerHTML = '<div class="empty">No application evidence found.</div>';
+    document.getElementById("timeline").innerHTML = '<div class="empty">No timestamped evidence.</div>';
+    document.getElementById("evidence").innerHTML = '<div class="empty">No files analyzed.</div>';
+});
+
+function resetAnalysis(){
+    ["dnsStatus","vpnStatus","profileStatus","certStatus","appStatus","removeStatus"].forEach(id=>{ setStatus(id,"blue","WAITING"); });
+    ["dnsDetails","vpnDetails","profileDetails","certDetails","appDetails","removeDetails"].forEach(id=>{ setText(id,"No analysis yet."); });
+}
+
+/* =========================================
+   EXPORT
+========================================= */
+exportButton.addEventListener("click", ()=>{
+    const lifecycleReport = appLifecycle.map(e=>`APP ${e.action}\nBundle ID: ${e.bundle}\nDate: ${e.date ? formatDate(e.date) : "Not linked"}\nSource: ${e.source}\nEvidence: ${e.context}\n`).join("\n");
+    const urlReport = records.map(record=>{
+        const urls = record.text.match(URL_REGEX) || [];
+        return urls.length ? `${record.name}\n${[...new Set(urls)].join("\n")}` : "";
+    }).filter(Boolean).join("\n\n");
+    const report = `METHOD CHICK IOS - $hip and Hext\n================================\n\nREVIEW DATE\n${new Date().toLocaleString("en-US")}\n\nFILES\n${records.length}\n\nTIMELINE EVENTS\n${events.length}\n\nDNS / IP REFERENCES\n${document.getElementById("statDns").textContent}\n\nBUNDLE IDS\n${document.getElementById("statApps").textContent}\n\nAPP INSTALL / REMOVE EVENTS\n${appLifecycle.length}\n\n\nAPPLICATION LIFECYCLE\n---------------------\n\n${lifecycleReport}\n\n\nURL / WEB EVIDENCE\n------------------\n\n${urlReport || "No URLs detected."}\n\n\nFILES\n-----\n\n${records.map(r=>r.name).join("\n")}\n\n\nAPPLICATIONS\n------------\n\n${applications.map(a=>`Name: ${a.name}\nBundle ID: ${a.bundle}\nSource: ${a.source}\nEvidence: ${a.evidence}\n`).join("\n")}\n\n\nTIMELINE\n--------\n\n${events.map(e=>`${formatDate(e.date)}\nType: ${e.type}\nSource: ${e.source}\nContext: ${e.context}\n`).join("\n")}\n\n\nNOTICE\n------\n\nThis report contains evidence extracted from supplied files.\n\nA detected string is not automatically proof that a DNS, VPN, profile, app or certificate was actively installed.\n\nApplication install/removal dates are shown only when a timestamp can be linked to the corresponding supplied evidence.\n`;
+    const blob = new Blob([report], {type:"text/plain;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href=url; a.download="METHOD-CHICK-IOS-REPORT.txt";
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+});
+
+/* =========================================
+   HELPERS
+========================================= */
+function setText(id,text){ const el = document.getElementById(id); if(el)el.textContent=text; }
+function setHTML(id,html){ const el = document.getElementById(id); if(el)el.innerHTML=html; }
+function setStatus(id, type, text){ const el = document.getElementById(id); if(!el)return; el.className = "status "+type; el.textContent=text; }
+function validIP(ip){ const p = ip.split(".").map(Number); return p.length===4 && p.every(x=>x>=0 && x<=255); }
+function validDate(d){ return !isNaN(d.getTime()) && d.getFullYear()>=2000 && d.getFullYear()<=2100; }
+function formatDate(d){ if(!d)return "Unknown"; return d.toLocaleString("en-GB",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit",hour12:false}); }
+function formatSize(bytes){ if(bytes<1024)return bytes+" B"; if(bytes<1024*1024)return (bytes/1024).toFixed(1)+" KB"; if(bytes<1024*1024*1024)return (bytes/1024/1024).toFixed(1)+" MB"; return (bytes/1024/1024/1024).toFixed(2)+" GB"; }
+function escapeHTML(value){ return String(value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;"); }
+
+/* =========================================
+   LOGO SYSTEM - REAL LOGOS FOR ALL BUNDLES & CONCEPTS
+   ========================================= */
+
+/* SVG INLINE LOGOS - for apps/concepts that Simple Icons doesn't have */
+const SVG_LOGOS = {
+    filza: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="16" rx="2" fill="#FFB300"/><path d="M2 8h20" stroke="#000" stroke-width="1.5"/><path d="M6 4V2h5v2" fill="#FFB300" stroke="#000" stroke-width="1.5"/><circle cx="8" cy="14" r="2" fill="#000"/><circle cx="16" cy="14" r="2" fill="#000"/></svg>`,
+    esign: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="20" height="18" rx="2" fill="#007AFF"/><path d="M6 17c2-4 4-6 6-6s4 2 6 6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="12" cy="9" r="2" fill="#fff"/></svg>`,
+    gbox: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="6" width="20" height="14" rx="2" fill="#333"/><path d="M2 10h20" stroke="#fff" stroke-width="1.5"/><rect x="5" y="13" width="4" height="4" fill="#fff"/><rect x="11" y="13" width="4" height="4" fill="#fff"/></svg>`,
+    scarlet: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7v10l10 5 10-5V7L12 2z" fill="#B4233C"/><path d="M12 6l-6 3v6l6 3 6-3V9l-6-3z" fill="#fff"/><path d="M12 10v4" stroke="#B4233C" stroke-width="2"/></svg>`,
+    proxy: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#315F9B" stroke-width="2" fill="none"/><path d="M3 12h18M12 3c3 3 4 6 4 9s-1 6-4 9M12 3c-3 3-4 6-4 9s1 6 4 9" stroke="#315F9B" stroke-width="2" fill="none"/></svg>`,
+    vpn: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z" fill="#18794E"/><path d="M9 12l2 2 4-4" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`,
+    dns: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" fill="#315F9B"/><ellipse cx="12" cy="12" rx="4" ry="9" fill="none" stroke="#fff" stroke-width="1.5"/><path d="M3 12h18" stroke="#fff" stroke-width="1.5"/></svg>`,
+    cert: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="9" r="6" fill="#996600"/><path d="M9 13l-2 9 5-3 5 3-2-9" fill="#996600"/><path d="M10 9l1.5 1.5L14 8" stroke="#fff" stroke-width="1.5" fill="none"/></svg>`,
+    profile: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="2" width="16" height="20" rx="2" fill="#555"/><path d="M8 7h8M8 11h8M8 15h5" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+    url: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 007 0l2-2a5 5 0 00-7-7l-1 1" stroke="#315F9B" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M14 11a5 5 0 00-7 0l-2 2a5 5 0 007 7l1-1" stroke="#315F9B" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`,
+    removal: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" fill="#B4233C"/><path d="M8 12h8" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+    install: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" fill="#18794E"/><path d="M12 7v8M8 11l4 4 4-4" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    evidence: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="#111" stroke-width="2" fill="none"/><path d="M16 16l5 5" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg>`,
+    file: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 2h8l4 4v16H6z" fill="#315F9B"/><path d="M14 2v4h4" stroke="#fff" stroke-width="1.5" fill="none"/></svg>`,
+    timeline: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="6" r="2" fill="#111"/><circle cx="12" cy="18" r="2" fill="#111"/><path d="M12 8v8" stroke="#111" stroke-width="2"/></svg>`,
+    plist: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="2" fill="#996600"/><path d="M7 8h10M7 12h10M7 16h6" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+    history: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#111" stroke-width="2" fill="none"/><path d="M12 7v5l3 2" stroke="#111" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`
+};
+
+const UI_ICONS = {
+    menu:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>`,
+    close:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>`,
+    search:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="6"/><path d="m16 16 5 5"/></svg>`,
+    history:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 2"/></svg>`,
+    method:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.2 5.1L20 10l-5.8 1.9L12 17l-2.2-5.1L4 10l5.8-1.9L12 3Z"/></svg>`,
+    file:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h4"/></svg>`,
+    dns:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c2 2.3 3 5 3 8s-1 5.7-3 8M12 4c-2 2.3-3 5-3 8s1 5.7 3 8"/></svg>`,
+    vpn:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v10H4z"/><path d="M8 19h8M12 15v4"/></svg>`,
+    profile:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12v18H6z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>`,
+    cert:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="5"/><path d="m9 13-1 8 4-2 4 2-1-8"/></svg>`,
+    install:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M8 11l4 4 4-4"/><path d="M5 20h14"/></svg>`,
+    info:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg>`
+};
+
+function icon(key){ return `<span class="logo-ui" aria-hidden="true">${UI_ICONS[key]||UI_ICONS.info}</span>`; }
+function brandLogo(slug,alt){ return `<img class="logo-brand" src="https://cdn.simpleicons.org/${slug}" alt="${alt||slug}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">`; }
+function svgLogo(name){ return `<span class="logo-brand" style="display:inline-grid;place-items:center;padding:2px;">${SVG_LOGOS[name]||SVG_LOGOS.file}</span>`; }
+
+/* Mapeo de bundles a logos (usa Simple Icons + SVG inline) */
+const BRAND_MAP = {
+    "com.google.ios.youtube":"youtube","com.google.ios.youtube.extensionshareextension":"youtube",
+    "com.hammerandchisel.discord":"discord","com.google.chrome.ios":"googlechrome",
+    "com.facebook.facebook":"facebook","com.apple.iclouddriveapp":"apple","com.apple.siri":"apple",
+    "com.apple.preferences":"apple","com.apple.device":"apple","com.apple.passd":"apple",
+    "com.apple.datamigrator":"apple","com.apple.iad":"apple","com.apple.kbd":"apple",
+    "com.apple.parsecd":"apple","com.apple.lsd":"apple","com.apple.profiled":"apple",
+    "com.apple.batterysaver":"apple","com.apple.watchlistkit":"apple","com.apple.net":"apple",
+    "com.apple.network":"apple","com.apple.uart":"apple","com.apple.commcenter":"apple",
+    "com.apple.flowswitch":"apple","com.apple.bluetooth":"apple","com.apple.nexus":"apple",
+    "com.apple.safari":"safari","com.apple.rapport":"apple","com.apple.wifi":"apple",
+    "com.apple.acl":"apple","com.apple.mobile":"apple","com.apple.freefire":"apple",
+    "com.apple.install":"appstore","com.apple.appstore":"appstore",
+    "com.tigisoftware.filza":"__svg:filza","net.whatsapp.whatsapp":"whatsapp",
+    "com.burbn.instagram":"instagram","com.zhiliaoapp.musically":"tiktok",
+    "com.google.gmail":"gmail","com.openai.chat":"openai","com.anthropic.claude":"anthropic",
+    "com.moonshot.kimichat":"kimi","com.google.gemini":"googlegemini",
+    "com.google.maps":"googlemaps","com.brave.ios.browser":"brave",
+    "com.threads":"threads","com.spotify.client":"spotify","com.netflix.netflix":"netflix",
+    "com.reddit.reddit":"reddit","com.snapchat.snapchat":"snapchat","com.github.studentpack":"github",
+    "com.supercell.laser":"supercell","com.dts.freefireth":"garena","com.dts.freefiremax":"garena",
+    "com.indeed.jobsearch":"indeed","com.duolingo.duolingomobile":"duolingo",
+    "com.soundcloud.touchapp":"soundcloud","com.roblox.robloxmobile":"roblox",
+    "com.khoindvn":"apple","com.whatsapp":"whatsapp","com.deepseek.chat":"deepseek",
+    "com.meitu.wink":"meitu","com.tradingview.tradingviewapp":"tradingview",
+    "com.einnovation.temu":"temu","com.esign":"__svg:esign","com.gbox":"__svg:gbox",
+    "com.scarlet":"__svg:scarlet","com.tencent.xin":"wechat",
+    "com.alibaba.aliexpress":"aliexpress","com.amazon.aiv":"amazon","com.ebay.iphone":"ebay",
+    "com.ubercab.UberClient":"uber","com.airbnb.app":"airbnb",
+    "com.apple.mobilesafari":"safari","com.apple.mobilemail":"apple","com.apple.mobilecal":"apple"
+};
+
+function getBrandForBundle(bundle){
+    const b = String(bundle||"").toLowerCase();
+    if(BRAND_MAP[b]) return BRAND_MAP[b];
+    for(const key in BRAND_MAP){
+        if(b.includes(key.toLowerCase())) return BRAND_MAP[key];
+    }
+    if(b.startsWith("com.apple")) return "apple";
+    if(b.startsWith("com.google")) return "google";
+    if(b.startsWith("com.microsoft")) return "microsoft";
+    if(b.startsWith("com.amazon")) return "amazon";
+    if(b.startsWith("com.facebook")) return "facebook";
+    if(b.startsWith("com.tencent")) return "tencent";
+    if(b.startsWith("com.alibaba")) return "alibaba";
+    if(b.startsWith("com.baidu")) return "baidu";
+    if(b.includes("whatsapp")) return "whatsapp";
+    if(b.includes("telegram")) return "telegram";
+    if(b.includes("discord")) return "discord";
+    if(b.includes("instagram")) return "instagram";
+    if(b.includes("facebook")) return "facebook";
+    if(b.includes("tiktok") || b.includes("musically")) return "tiktok";
+    if(b.includes("youtube")) return "youtube";
+    if(b.includes("twitter") || b.includes("x.com")) return "x";
+    if(b.includes("snapchat")) return "snapchat";
+    if(b.includes("spotify")) return "spotify";
+    if(b.includes("netflix")) return "netflix";
+    if(b.includes("reddit")) return "reddit";
+    if(b.includes("filza")) return "__svg:filza";
+    if(b.includes("esign")) return "__svg:esign";
+    if(b.includes("gbox")) return "__svg:gbox";
+    if(b.includes("scarlet")) return "__svg:scarlet";
+    if(b.includes("proxy")) return "__svg:proxy";
+    if(b.includes("vpn")) return "__svg:vpn";
+    if(b.includes("dns")) return "__svg:dns";
+    return null;
+}
+
+function bundleLogoHTML(bundle){
+    const brand = getBrandForBundle(bundle);
+    if(!brand) return `<span class="bundle-fallback" aria-hidden="true">${escapeHTML((bundle||'?').charAt(0).toUpperCase())}</span>`;
+    if(brand.startsWith("__svg:")) return svgLogo(brand.replace("__svg:",""));
+    return `<img class="bundle-logo" src="https://cdn.simpleicons.org/${brand}" alt="${escapeHTML(bundle)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<span class=&quot;bundle-fallback&quot;>${escapeHTML((bundle||'?').charAt(0).toUpperCase())}</span>'">`;
+}
+
+function decorateBundleIdList(){
+    const details = document.getElementById('appDetails');
+    if(!details) return;
+    const walker = document.createTreeWalker(details, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while(walker.nextNode()){
+        const n = walker.currentNode;
+        if(/\b(?:com|net|org|io|me|app)\.[A-Za-z0-9_.-]+/.test(n.nodeValue||'')) nodes.push(n);
+    }
+    nodes.forEach(n=>{
+        if(n.parentElement?.closest('.bundle-row')) return;
+        const text = n.nodeValue||'';
+        const frag = document.createDocumentFragment();
+        let last = 0;
+        const re = /\b(?:com|net|org|io|me|app)\.[A-Za-z0-9_.-]+/g;
+        let m;
+        while((m=re.exec(text))){
+            if(m.index>last) frag.appendChild(document.createTextNode(text.slice(last,m.index)));
+            const row = document.createElement('span');
+            row.className='bundle-row';
+            row.innerHTML = bundleLogoHTML(m[0])+`<span>${escapeHTML(m[0])}</span>`;
+            frag.appendChild(row);
+            last = re.lastIndex;
+        }
+        if(last<text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+        if(frag.childNodes.length) n.parentNode.replaceChild(frag,n);
+    });
+}
+
+function decorateSearchResults(){
+    document.querySelectorAll(".search-item").forEach(item=>{
+        if(item.dataset.logoDecorated==="1")return;
+        const title = item.querySelector(".search-title");
+        if(!title)return;
+        const text = title.textContent||"";
+        const bundleMatch = text.match(/\b(?:com|net|org|io|me|app)\.[A-Za-z0-9_.-]+/);
+        if(bundleMatch){
+            const brand = getBrandForBundle(bundleMatch[0]);
+            if(brand){
+                if(brand.startsWith("__svg:")) title.insertAdjacentHTML("afterbegin", svgLogo(brand.replace("__svg:","")));
+                else title.insertAdjacentHTML("afterbegin", brandLogo(brand, bundleMatch[0]));
+            }
+        }
+        item.dataset.logoDecorated="1";
+    });
+}
+
+function decorateAppNames(){
+    document.querySelectorAll(".app-name").forEach(el=>{
+        if(el.dataset.logoDecorated==="1")return;
+        const text = el.textContent||"";
+        const bundleMatch = text.match(/\b(?:com|net|org|io|me|app)\.[A-Za-z0-9_.-]+/);
+        if(bundleMatch){
+            const brand = getBrandForBundle(bundleMatch[0]);
+            if(brand){
+                if(brand.startsWith("__svg:")) el.insertAdjacentHTML("afterbegin", svgLogo(brand.replace("__svg:","")));
+                else el.insertAdjacentHTML("afterbegin", brandLogo(brand, bundleMatch[0]));
+            }
+        }
+        el.dataset.logoDecorated="1";
+    });
+}
+
+function decorateControls(){
+    document.querySelectorAll(".menu-link,.btn,.close-menu").forEach(el=>{
+        if(el.dataset.logoDecorated==="1")return;
+        const label = (el.textContent||"").replace(/\s+/g," ").trim().toUpperCase();
+        let key = "info";
+        if(label.includes("SEARCH"))key="search";
+        else if(label.includes("CLEAR")||label.includes("CLOSE"))key="close";
+        else if(label.includes("EXPORT"))key="file";
+        else if(label.includes("ANALY"))key="install";
+        else if(label.includes("HISTORY"))key="history";
+        else if(label.includes("METHOD"))key="method";
+        const holder = document.createElement("span");
+        holder.innerHTML = icon(key);
+        el.prepend(holder.firstElementChild);
+        el.dataset.logoDecorated="1";
+    });
+}
+
+function decorateHeadings(){
+    document.querySelectorAll(".card-title,.result h3").forEach(el=>{
+        if(el.dataset.logoDecorated==="1")return;
+        const label = (el.textContent||"").replace(/\s+/g," ").trim().toUpperCase();
+        let key = "info";
+        if(label.includes("DNS"))key="dns";
+        else if(label.includes("VPN"))key="vpn";
+        else if(label.includes("PROFILE")||label.includes("MDM"))key="profile";
+        else if(label.includes("CERT"))key="cert";
+        else if(label.includes("INSTALL"))key="install";
+        else if(label.includes("SEARCH"))key="search";
+        else if(label.includes("FILE"))key="file";
+        const holder = document.createElement("span");
+        holder.innerHTML = icon(key);
+        el.prepend(holder.firstElementChild);
+        el.dataset.logoDecorated="1";
+    });
+}
+
+function decorateInfoLinks(){
+    document.querySelectorAll(".links a").forEach(a=>{
+        if(a.dataset.logoDecorated==="1")return;
+        const label = (a.textContent||"").toUpperCase();
+        let slug=null;
+        if(label.includes("TELEGRAM"))slug="telegram";
+        else if(label.includes("DISCORD"))slug="discord";
+        else if(label.includes("INSTAGRAM"))slug="instagram";
+        if(slug){
+            a.classList.add("info-logo-link");
+            a.insertAdjacentHTML("afterbegin", brandLogo(slug,label));
+        }
+        a.dataset.logoDecorated="1";
+    });
+}
+
+function decorateEverything(){
+    decorateControls();
+    decorateHeadings();
+    decorateInfoLinks();
+    decorateBundleIdList();
+    decorateSearchResults();
+    decorateAppNames();
+}
+
+document.addEventListener("DOMContentLoaded", decorateEverything);
+new MutationObserver(()=>decorateEverything()).observe(document.body,{childList:true,subtree:true});
+setTimeout(decorateEverything,300);
+setTimeout(decorateEverything,1200);
+setTimeout(decorateEverything,2500);
+
+/* =========================================
+   INITIAL
+========================================= */
+renderHistory();
+passwordInput.focus();
+</script>
+</body>
+</html>
